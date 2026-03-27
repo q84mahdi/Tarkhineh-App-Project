@@ -2,8 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-export default function useFetch(url, query = "") {
-  const [data, setData] = useState({});
+export default function useFetch<T>(url: string, query = "") {
+  const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export default function useFetch(url, query = "") {
       try {
         setIsLoading(true);
 
-        const { data } = await axios.get(`${url}?${query}`, {
+        const { data } = await axios.get<T>(`${url}?${query}`, {
           cancelToken: source.token,
         });
 
@@ -23,8 +23,8 @@ export default function useFetch(url, query = "") {
         if (axios.isCancel(err)) {
           console.log("successfully aborted");
         } else {
-          setData([]);
-          toast.error(err?.message);
+          setData(null);
+          toast.error(err instanceof Error ? err.message : "خطا در اتصال");
         }
       } finally {
         setIsLoading(false);

@@ -1,8 +1,15 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, type ReactNode } from "react";
 
-const ToggleContext = createContext();
+interface ToggleContextValues {
+  isToggleOpen: boolean;
+  setIsToggleOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-export function ToggleProvider({ children }) {
+const ToggleContext = createContext<ToggleContextValues>(
+  {} as ToggleContextValues,
+);
+
+export function ToggleProvider({ children }: { children: ReactNode }) {
   const [isToggleOpen, setIsToggleOpen] = useState(false);
 
   return (

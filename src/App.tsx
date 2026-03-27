@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import AppProviders from "./Providers/AppProviders";
 import { Toaster } from "react-hot-toast";
+import AppProviders from "./Providers/AppProviders";
 
 // Home Page Import
 import HomePage from "./Pages/HomePage";

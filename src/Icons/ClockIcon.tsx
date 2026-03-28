@@ -1,4 +1,6 @@
-function ClockIcon({ size = 24, className }) {
+import type { IconPropsType } from "../Types/globalTypes";
+
+function ClockIcon({ size = 24, className }: IconPropsType) {
   return (
     <svg
       width={size}

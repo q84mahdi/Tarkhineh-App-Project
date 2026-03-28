@@ -1,4 +1,6 @@
-function HeartFillIcon({ size, className }) {
+import type { IconPropsType } from "../Types/globalTypes";
+
+function HeartFillIcon({ size, className }: IconPropsType) {
   return (
     <svg
       width={size}

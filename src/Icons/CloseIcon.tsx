@@ -1,4 +1,6 @@
-function CloseIcon({ size, className }) {
+import type { IconPropsType } from "../Types/globalTypes";
+
+function CloseIcon({ size = 24, className }: IconPropsType) {
   return (
     <svg
       width={size}

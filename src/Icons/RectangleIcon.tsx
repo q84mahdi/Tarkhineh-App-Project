@@ -1,4 +1,6 @@
-function RectangleIcon({ size = 20, className }) {
+import type { IconPropsType } from "../Types/globalTypes";
+
+function RectangleIcon({ size = 20, className }: IconPropsType) {
   return (
     <svg
       width={size}

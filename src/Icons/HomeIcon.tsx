@@ -1,4 +1,6 @@
-function HomeIcon({ size = 48, className }) {
+import type { IconPropsType } from "../Types/globalTypes";
+
+function HomeIcon({ size = 48, className }: IconPropsType) {
   return (
     <svg
       width={size}

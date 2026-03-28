@@ -1,4 +1,6 @@
-function UserIcon({ size = 48, className }) {
+import type { IconPropsType } from "../Types/globalTypes";
+
+function UserIcon({ size = 48, className }: IconPropsType) {
   return (
     <svg
       width={size}

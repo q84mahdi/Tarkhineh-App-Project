@@ -1,4 +1,6 @@
-function TwitterIcon({ size = 16, className }) {
+import type { IconPropsType } from "../Types/globalTypes";
+
+function TwitterIcon({ size = 16, className }: IconPropsType) {
   return (
     <svg
       width={size}

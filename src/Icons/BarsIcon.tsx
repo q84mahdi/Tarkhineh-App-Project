@@ -1,4 +1,6 @@
-function BarsIcon({ size = 24, className }) {
+import type { IconPropsType } from "../Types/globalTypes";
+
+function BarsIcon({ size = 24, className }: IconPropsType) {
   return (
     <svg
       width={size}

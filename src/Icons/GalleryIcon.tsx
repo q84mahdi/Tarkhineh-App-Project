@@ -1,4 +1,6 @@
-function GalleryIcon({ size = 32, className }) {
+import type { IconPropsType } from "../Types/globalTypes";
+
+function GalleryIcon({ size = 32, className }: IconPropsType) {
   return (
     <svg
       width={size}

@@ -1,4 +1,6 @@
-function SearchIcon({ size = 24, className }) {
+import type { IconPropsType } from "../Types/globalTypes";
+
+function SearchIcon({ size = 24, className }: IconPropsType) {
   return (
     <svg
       width={size}

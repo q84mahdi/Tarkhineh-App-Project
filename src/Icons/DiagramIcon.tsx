@@ -1,4 +1,6 @@
-function DiagramIcon({ size = 48, className }) {
+import type { IconPropsType } from "../Types/globalTypes";
+
+function DiagramIcon({ size = 48, className }: IconPropsType) {
   return (
     <svg
       width={size}

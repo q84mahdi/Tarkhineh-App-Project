@@ -6,7 +6,7 @@ import {
   type ReactNode,
 } from "react";
 import useFetch from "../Hooks/useFetch";
-import type { Branch } from "../Types/BranchTypes";
+import type { Branch } from "../Types/branchTypes";
 
 interface BranchesContextValues {
   ekbatanBranch: Branch | null;

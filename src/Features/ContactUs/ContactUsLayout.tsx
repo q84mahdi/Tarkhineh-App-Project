@@ -15,16 +15,7 @@ function ContactUsLayout() {
   const { ekbatanBranch, chalosBranch, aghdasiyehBranch, vanakBranch } =
     useBranches();
 
-  if (
-    !ekbatanBranch ||
-    !chalosBranch ||
-    !aghdasiyehBranch ||
-    !vanakBranch ||
-    !ekbatanBranch.name ||
-    !chalosBranch.name ||
-    !aghdasiyehBranch.name ||
-    !vanakBranch.name
-  )
+  if (!ekbatanBranch || !chalosBranch || !aghdasiyehBranch || !vanakBranch)
     return (
       <div className="minimum-height flex animate-pulse items-center justify-center font-bold lg:text-lg">
         در حال بارگذاری اطلاعات ...

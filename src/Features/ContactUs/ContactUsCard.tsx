@@ -4,8 +4,13 @@ import { useNavigate } from "react-router-dom";
 import Modal from "../../UI/Modal";
 import CloseIcon from "../../Icons/CloseIcon";
 import GalleryIcon from "../../Icons/GalleryIcon";
+import type { Branch } from "../../Types/branchTypes";
 
-function ContactUsCard({ branch }) {
+interface ContactUsCardProps {
+  branch: Branch;
+}
+
+function ContactUsCard({ branch }: ContactUsCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 

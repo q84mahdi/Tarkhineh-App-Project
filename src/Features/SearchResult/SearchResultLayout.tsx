@@ -3,25 +3,26 @@ import { useSearchParams } from "react-router-dom";
 import { useMenu } from "../../Contexts/MenuContext";
 import SearchBar from "../../UI/SearchBar";
 import FoodCard from "../../UI/FoodCard";
+import type { Food } from "../../Types/menuTypes";
 
 function SearchResultLayout() {
   const [searchValue, setSearchValue] = useState("");
-  const [result, setResult] = useState([]);
+  const [result, setResult] = useState<Food[]>([]);
 
   const [searchParams] = useSearchParams();
 
   const { menu } = useMenu();
 
-  const searchQuery = searchParams.get("q").split("+").join(" ") || "";
+  const searchQuery = searchParams.get("q")?.split("+").join(" ") || "";
 
   useEffect(() => {
     if (searchQuery === "") return;
 
     setSearchValue(searchQuery);
 
-    const filteredItems = menu.filter((item) =>
-      item.title.includes(searchQuery),
-    );
+    const filteredItems = menu
+      ? menu.filter((item) => item.title.includes(searchQuery))
+      : [];
 
     setResult(filteredItems);
   }, [menu, searchParams, searchQuery]);

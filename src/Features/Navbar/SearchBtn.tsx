@@ -27,7 +27,6 @@ function SearchBtn() {
           <SearchBar
             searchValue={searchValue}
             setSearchValue={setSearchValue}
-            pathname="search-result"
             onClose={() => setIsSearchOpen(false)}
           />
         </div>

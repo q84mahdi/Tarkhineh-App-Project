@@ -13,7 +13,7 @@ const branches = {
   aghdasiyeh: "اقدسیه",
   chalos: "چالوس",
   vanak: "ونک",
-};
+} as const;
 
 const menus = ["main-food", "appetizer", "dessert", "drink"];
 
@@ -25,6 +25,12 @@ function NavbarLinks() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
 
   const { pathname } = useLocation();
+
+  const branchKey = pathname.split("/").at(2);
+  const isValidBranch = branchKey != null && branchKey in branches;
+  const branchText = isValidBranch
+    ? branches[branchKey as keyof typeof branches]
+    : "شعبه";
 
   return (
     <ul className="flex min-w-64 flex-col gap-y-3 px-4 md:flex-row md:items-center md:gap-x-4 md:px-0 lg:gap-x-6">
@@ -45,8 +51,8 @@ function NavbarLinks() {
         <NavbarDropDown
           state={isOpenBranch}
           setState={setIsOpenBranch}
-          text={branches[pathname.split("/")[2]] || "شعبه"}
-          isSelected={branches[pathname.split("/")[2]]}
+          text={branchText}
+          isSelected={isValidBranch}
           items={[
             { title: "اکباتان", link: "/branch/ekbatan" },
             { title: "چالوس", link: "/branch/chalos" },

@@ -1,12 +1,30 @@
 import CustomNavLink from "../../UI/CustomNavLink";
 import useOutsideClick from "../../Hooks/useOutsideClick";
 import ArrowLeftIcon from "../../Icons/ArrowLeftIcon";
+import type { Dispatch } from "react";
 
-function NavbarDropDown({ state, setState, text, items, isSelected }) {
+interface NavbarDropDownProps {
+  state: boolean;
+  setState: Dispatch<React.SetStateAction<boolean>>;
+  text: string;
+  items: {
+    title: string;
+    link: string;
+  }[];
+  isSelected: boolean;
+}
+
+function NavbarDropDown({
+  state,
+  setState,
+  text,
+  items,
+  isSelected,
+}: NavbarDropDownProps) {
   const dropDownLinkClass =
     "border-b border-b-gray-300 px-2 py-2 text-sm text-gray-800 last:border-none md:hover:text-primary";
 
-  const ref = useOutsideClick(() => setState(false));
+  const ref = useOutsideClick<HTMLDivElement>(() => setState(false));
 
   return (
     <div ref={ref}>

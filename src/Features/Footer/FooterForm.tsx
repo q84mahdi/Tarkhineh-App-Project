@@ -3,6 +3,13 @@ import toast from "react-hot-toast";
 import TextFieldInput from "../../UI/TextFieldInput";
 import TextAreaFieldInput from "../../UI/TextAreaFieldInput";
 
+interface FooterFormValues {
+  name: string;
+  mobileNumber: string;
+  email: string;
+  message: string;
+}
+
 function FooterForm() {
   const {
     register,
@@ -10,11 +17,11 @@ function FooterForm() {
     reset,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm<FooterFormValues>();
 
   const messageLength = watch("message");
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: FooterFormValues) => {
     console.log(data);
 
     toast.success("پیام شما با موفقیت ارسال شد");

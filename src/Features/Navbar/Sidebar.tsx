@@ -8,7 +8,7 @@ import BarsIcon from "../../Icons/BarsIcon";
 function Sidebar() {
   const { isToggleOpen, setIsToggleOpen } = useToggle();
 
-  const ref = useOutsideClick(() => setIsToggleOpen(false));
+  const ref = useOutsideClick<HTMLDivElement>(() => setIsToggleOpen(false));
 
   return (
     <div

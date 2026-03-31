@@ -1,4 +1,8 @@
-function Rate({ rate }) {
+interface RateProps {
+  rate: string;
+}
+
+function Rate({ rate }: RateProps) {
   switch (rate) {
     case "1": {
       return (

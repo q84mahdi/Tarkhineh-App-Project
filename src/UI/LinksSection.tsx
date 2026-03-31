@@ -1,6 +1,13 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, type To } from "react-router-dom";
 
-function LinksSection({ links }) {
+interface LinksSectionProps {
+  links: {
+    href: To;
+    label: string;
+  }[];
+}
+
+function LinksSection({ links }: LinksSectionProps) {
   return (
     <div className="h-10 w-full bg-gray-200 lg:h-16">
       <ul className="container flex h-full items-center gap-4 lg:gap-8">

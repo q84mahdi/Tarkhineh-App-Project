@@ -1,4 +1,8 @@
-function Star({ rate }) {
+interface StarProps {
+  rate: string;
+}
+
+function Star({ rate }: StarProps) {
   switch (rate) {
     case "0": {
       return (

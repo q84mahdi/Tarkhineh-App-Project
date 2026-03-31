@@ -1,7 +1,14 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, type To } from "react-router-dom";
 import { useToggle } from "../Contexts/ToggleContext";
+import type { ReactNode } from "react";
 
-function CustomNavLink({ to, children, className }) {
+interface CustomNavLinkProps {
+  to: To;
+  children: ReactNode;
+  className?: string;
+}
+
+function CustomNavLink({ to, children, className }: CustomNavLinkProps) {
   const { setIsToggleOpen } = useToggle();
 
   return (

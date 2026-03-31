@@ -8,7 +8,16 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-function Header({ slides }) {
+interface HeaderProps {
+  slides: {
+    id: number;
+    image: string;
+    text: string;
+    buttonText?: string;
+  }[];
+}
+
+function Header({ slides }: HeaderProps) {
   const navigate = useNavigate();
 
   return (
@@ -27,7 +36,7 @@ function Header({ slides }) {
         pagination={{
           el: ".swiper-pagination-custom",
           clickable: true,
-          renderBullet: (index, className) =>
+          renderBullet: (_, className) =>
             `<span class="${className} custom-bullet !mx-0 !cursor-pointer"></span>`,
         }}
         className="w-full"

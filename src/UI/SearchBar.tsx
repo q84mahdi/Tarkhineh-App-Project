@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, type ChangeEventHandler } from "react";
 import {
   createSearchParams,
   useLocation,
@@ -7,25 +7,32 @@ import {
 } from "react-router-dom";
 import SearchIcon from "../Icons/SearchIcon";
 
+interface SearchBarProps {
+  searchValue: string;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  className?: string;
+  onClose?: () => void;
+}
+
 function SearchBar({
   searchValue,
   setSearchValue,
   className = "",
   onClose = () => {},
-}) {
+}: SearchBarProps) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { pathname } = useLocation();
 
   useEffect(() => {
     if (searchParams.get("q")) {
-      setSearchValue(searchParams.get("q").split("+").join(" "));
+      setSearchValue(searchParams.get("q")!.split("+").join(" "));
     } else {
       setSearchValue("");
     }
   }, [pathname]);
 
-  const onChange = (e) => {
+  const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setSearchValue(e.target.value);
   };
 

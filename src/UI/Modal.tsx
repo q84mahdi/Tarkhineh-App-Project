@@ -1,8 +1,16 @@
+import type { ReactNode } from "react";
 import useOutsideClick from "../Hooks/useOutsideClick";
 import CloseIcon from "../Icons/CloseIcon";
 
-function Modal({ title, onClose, isOpen, children }) {
-  const ref = useOutsideClick(onClose);
+interface ModalProps {
+  title: string;
+  onClose: () => void;
+  isOpen: boolean;
+  children: ReactNode;
+}
+
+function Modal({ title, onClose, isOpen, children }: ModalProps) {
+  const ref = useOutsideClick<HTMLDivElement>(onClose);
 
   return (
     <div

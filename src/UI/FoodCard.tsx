@@ -5,8 +5,13 @@ import { toEnglishNumbersWithoutComma } from "../Utils/formatNumber";
 import { useState } from "react";
 import HeartFillIcon from "../Icons/HeartFillIcon";
 import makeImageKitUrl from "../Utils/makeImageKitUrl";
+import type { Food } from "../Types/menuTypes";
 
-function FoodCard({ food }) {
+interface FoodCardProps {
+  food: Food;
+}
+
+function FoodCard({ food }: FoodCardProps) {
   const { image, title, main_price, discount, price, rate, score } = food;
 
   const [isLiked, setIsLiked] = useState(false);

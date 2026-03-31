@@ -3,8 +3,8 @@ import { useEffect, useRef, type RefObject } from "react";
 export default function useOutsideClick<T extends HTMLElement>(
   handler: () => void,
   listenCapturing = true,
-): RefObject<T | null> {
-  const ref = useRef<T | null>(null);
+): RefObject<T> {
+  const ref = useRef<T>(null);
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {

@@ -1,7 +1,17 @@
 import { useState } from "react";
 import ArrowLeftIcon from "../Icons/ArrowLeftIcon";
 
-function Accordion({ items }) {
+interface AccordionItem {
+  mobile_title: string;
+  desktop_title: string;
+  description: string;
+}
+
+interface AccordionProps {
+  items: AccordionItem[];
+}
+
+function Accordion({ items }: AccordionProps) {
   return (
     <div className="mb-6 mt-3 rounded border border-gray-400 lg:mb-12 lg:mt-6 lg:rounded-lg">
       {items.map((item, index) => (
@@ -12,7 +22,11 @@ function Accordion({ items }) {
 }
 export default Accordion;
 
-function AccordionItem({ item }) {
+interface AccordionItemProps {
+  item: AccordionItem;
+}
+
+function AccordionItem({ item }: AccordionItemProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

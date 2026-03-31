@@ -2,15 +2,21 @@ import { useForm } from "react-hook-form";
 import TextFieldInput from "../../UI/TextFieldInput";
 import toast from "react-hot-toast";
 
+interface FranchiseCouncilFormValues {
+  name: string;
+  phone: string;
+  time: string;
+}
+
 function FranchiseCouncilForm() {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm<FranchiseCouncilFormValues>();
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: FranchiseCouncilFormValues) => {
     console.log(data);
     reset();
     toast.success("درخواست شما با موافقت ثبت شد");

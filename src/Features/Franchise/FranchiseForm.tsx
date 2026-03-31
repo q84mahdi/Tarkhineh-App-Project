@@ -2,15 +2,31 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import TextFieldInput from "../../UI/TextFieldInput";
 
+interface FranchiseFormValues {
+  name: string;
+  code: string;
+  phone: string;
+  province: string;
+  city: string;
+  area: string;
+  ownershipType: string;
+  areaSize: string;
+  buildingAge: string;
+  hasLicense: boolean;
+  hasKitchen: boolean;
+  hasParking: boolean;
+  hasStorage: boolean;
+}
+
 function FranchiseForm() {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm<FranchiseFormValues>();
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: FranchiseFormValues) => {
     console.log(data);
     reset();
     toast.success("اطلاعات با موفقیت ثبت شد");

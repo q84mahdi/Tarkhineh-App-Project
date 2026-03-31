@@ -3,7 +3,7 @@ import useOutsideClick from "../Hooks/useOutsideClick";
 import CloseIcon from "../Icons/CloseIcon";
 
 interface ModalProps {
-  title: string;
+  title?: string;
   onClose: () => void;
   isOpen: boolean;
   children: ReactNode;

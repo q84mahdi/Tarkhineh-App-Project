@@ -5,8 +5,13 @@ import CloseIcon from "../../Icons/CloseIcon";
 import ArrowLeftIcon from "../../Icons/ArrowLeftIcon";
 import ExpandIcon from "../../Icons/ExpandIcon";
 import GalleryIcon from "../../Icons/GalleryIcon";
+import type { Branch } from "../../Types/branchTypes";
 
-function BranchCard({ branch }) {
+interface BranchCardProps {
+  branch: Branch;
+}
+
+function BranchCard({ branch }: BranchCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const navigate = useNavigate();

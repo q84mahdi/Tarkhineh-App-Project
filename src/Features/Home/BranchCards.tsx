@@ -1,19 +1,22 @@
 import BranchCard from "./BranchCard";
 import useFetch from "../../Hooks/useFetch";
+import type { Branch } from "../../Types/branchTypes";
 
 function BranchCards() {
-  const { data: ekbatan } = useFetch(
+  const { data: ekbatan } = useFetch<Branch>(
     "https://tarkhineh-app-api.vercel.app/branches/1",
   );
-  const { data: chalos } = useFetch(
+  const { data: chalos } = useFetch<Branch>(
     "https://tarkhineh-app-api.vercel.app/branches/2",
   );
-  const { data: aghdasiyeh } = useFetch(
+  const { data: aghdasiyeh } = useFetch<Branch>(
     "https://tarkhineh-app-api.vercel.app/branches/3",
   );
-  const { data: vanak } = useFetch(
+  const { data: vanak } = useFetch<Branch>(
     "https://tarkhineh-app-api.vercel.app/branches/4",
   );
+
+  if (!ekbatan || !chalos || !aghdasiyeh || !vanak) return null;
 
   return (
     <div className="container relative py-8">

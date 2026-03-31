@@ -1,4 +1,11 @@
-function MenuCard({ image, alt, text, onClick }) {
+interface MenuCardProps {
+  image: string;
+  alt: string;
+  text: string;
+  onClick: () => void;
+}
+
+function MenuCard({ image, alt, text, onClick }: MenuCardProps) {
   return (
     <div className="group relative h-20 w-[140px] rounded bg-primary shadow-lg md:h-32 md:w-[210px] lg:rounded-lg xl:h-40 xl:w-72">
       <img

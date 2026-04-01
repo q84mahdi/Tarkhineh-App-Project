@@ -3,15 +3,28 @@ import { FreeMode } from "swiper/modules";
 import FoodCard from "../../UI/FoodCard";
 import MenuIcon from "../../Icons/MenuIcon";
 import { useNavigate } from "react-router-dom";
+import type { Food } from "../../Types/menuTypes";
 
 import "swiper/css";
 import "swiper/css/free-mode";
 
-function CardsSlider({ title, cards, isPrimary = false, isLast = false }) {
+interface CardsSliderProps {
+  title: string;
+  cards: Food[];
+  isPrimary?: boolean;
+  isLast?: boolean;
+}
+
+function CardsSlider({
+  title,
+  cards,
+  isPrimary = false,
+  isLast = false,
+}: CardsSliderProps) {
   const navigate = useNavigate();
 
   return (
-    <div className={isPrimary && "bg-primary"}>
+    <div className={isPrimary ? "bg-primary" : ""}>
       <div className="container px-0 py-6 md:py-8 lg:py-12">
         {/* Title */}
         <h2

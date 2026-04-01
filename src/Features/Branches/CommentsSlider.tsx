@@ -2,12 +2,17 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination } from "swiper/modules";
 import { toEnglishNumbersWithoutComma } from "../../Utils/formatNumber";
 import Star from "../../UI/Star";
+import type { Comment } from "../../Types/branchTypes";
 
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 
-function CommentsSlider({ comments }) {
+interface CommentsSliderProps {
+  comments: Comment[];
+}
+
+function CommentsSlider({ comments }: CommentsSliderProps) {
   return (
     <div>
       <div className="container px-0 py-6 md:py-8 lg:py-12">

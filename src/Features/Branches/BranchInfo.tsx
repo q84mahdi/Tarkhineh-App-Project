@@ -2,7 +2,25 @@ import ClockIcon from "../../Icons/ClockIcon";
 import LocationIcon from "../../Icons/LocationIcon";
 import PhoneIcon from "../../Icons/PhoneIcon";
 
-function BranchInfo({ title, image, phone_numberes, location, work_time }) {
+interface BranchInfoProps {
+  title: string;
+  image: string;
+  phone_numberes: {
+    mobile: string;
+    desktop_1: string;
+    desktop_2: string;
+  };
+  location: string;
+  work_time: string;
+}
+
+function BranchInfo({
+  title,
+  image,
+  phone_numberes,
+  location,
+  work_time,
+}: BranchInfoProps) {
   return (
     <div className="relative mb-12 flex flex-col items-center justify-center md:mb-16 lg:mb-24">
       {/* Branch Title */}

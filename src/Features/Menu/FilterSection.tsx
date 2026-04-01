@@ -13,7 +13,15 @@ import { FreeMode } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/free-mode";
 
-function FilterSection({ filters }) {
+interface FilterSectionProps {
+  filters: {
+    key: string;
+    value: string;
+    label: string;
+  }[];
+}
+
+function FilterSection({ filters }: FilterSectionProps) {
   const [searchValue, setSearchValue] = useState("");
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -22,7 +30,7 @@ function FilterSection({ filters }) {
   const category = searchParams.get("category");
   const sort = searchParams.get("sort");
 
-  const clickHandler = (key, value) => {
+  const clickHandler = (key: string, value: string) => {
     if (searchParams.get(key) === value) {
       searchParams.delete(key);
 

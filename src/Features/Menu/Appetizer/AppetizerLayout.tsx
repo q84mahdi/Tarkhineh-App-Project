@@ -6,27 +6,28 @@ import MenuFoodCard from "../MenuFoodCard";
 import { useEffect, useState } from "react";
 import { toEnglishNumbersWithoutComma } from "../../../Utils/formatNumber";
 import toast from "react-hot-toast";
+import type { Food } from "../../../Types/menuTypes";
 
 const FILTERS = [
   {
     key: "category",
-    value: "persian-desserts",
-    label: "دسر‌های ایرانی",
+    value: "persian-appetizers",
+    label: "پیش‌غذاهای ایرانی",
   },
   {
     key: "category",
-    value: "forign-desserts",
-    label: "دسر‌های غیر ایرانی",
+    value: "foreign-appetizers",
+    label: "پیش‌غذاهای غیر ایرانی",
   },
   {
     key: "category",
-    value: "jellies",
-    label: "ژله‌ها",
+    value: "soups",
+    label: "سوپ‌ها",
   },
   {
     key: "category",
-    value: "cakes",
-    label: "کیک‌ها",
+    value: "finger-foods",
+    label: "فینگرفود‌ها",
   },
   {
     key: "sort",
@@ -45,10 +46,10 @@ const FILTERS = [
   },
 ];
 
-function DessertLayout() {
-  const [result, setResult] = useState([]);
+function AppetizerLayout() {
+  const [result, setResult] = useState<Food[]>([]);
   const [searchParams] = useSearchParams();
-  const { dessert } = useMenu();
+  const { appetizer } = useMenu();
 
   const isFiltered = searchParams.size > 0;
 
@@ -57,26 +58,26 @@ function DessertLayout() {
   const search = searchParams.get("q");
 
   useEffect(() => {
-    if (!dessert && !isFiltered) return;
+    if (!appetizer || !isFiltered) return;
 
     const allFoods = [
-      ...(dessert.persian_desserts || []),
-      ...(dessert.foreign_desserts || []),
-      ...(dessert.jellies || []),
-      ...(dessert.cakes || []),
+      ...(appetizer.persian_appetizers || []),
+      ...(appetizer.foreign_appetizers || []),
+      ...(appetizer.soups || []),
+      ...(appetizer.finger_foods || []),
     ];
 
     let filteredFoods = allFoods;
 
     if (category) {
-      if (category === "persian-desserts") {
-        filteredFoods = dessert.persian_desserts;
-      } else if (category === "forign-desserts") {
-        filteredFoods = dessert.foreign_desserts;
-      } else if (category === "jellies") {
-        filteredFoods = dessert.jellies;
-      } else if (category === "cakes") {
-        filteredFoods = dessert.cakes;
+      if (category === "persian-appetizers") {
+        filteredFoods = appetizer.persian_appetizers;
+      } else if (category === "foreign-appetizers") {
+        filteredFoods = appetizer.foreign_appetizers;
+      } else if (category === "soups") {
+        filteredFoods = appetizer.soups;
+      } else if (category === "finger-foods") {
+        filteredFoods = appetizer.finger_foods;
       }
     }
 
@@ -84,31 +85,33 @@ function DessertLayout() {
       if (sort === "bestseller") {
         filteredFoods = [...filteredFoods].sort(
           (a, b) =>
-            toEnglishNumbersWithoutComma(b.score) -
-            toEnglishNumbersWithoutComma(a.score),
+            Number(toEnglishNumbersWithoutComma(b.score)) -
+            Number(toEnglishNumbersWithoutComma(a.score)),
         );
       } else if (sort === "economical") {
         filteredFoods = [...filteredFoods].sort(
           (a, b) =>
-            toEnglishNumbersWithoutComma(a.price) -
-            toEnglishNumbersWithoutComma(b.price),
+            Number(toEnglishNumbersWithoutComma(a.price)) -
+            Number(toEnglishNumbersWithoutComma(b.price)),
         );
       } else if (sort === "popular") {
-        filteredFoods = [...filteredFoods].sort((a, b) => b.rate - a.rate);
+        filteredFoods = [...filteredFoods].sort(
+          (a, b) => Number(b.rate) - Number(a.rate),
+        );
       }
     }
 
     if (search) {
       filteredFoods =
-        filteredFoods &&
-        filteredFoods.length > 0 &&
-        filteredFoods.filter((food) =>
-          food.title.toLowerCase().includes(search.toLowerCase()),
-        );
+        filteredFoods && filteredFoods.length > 0
+          ? filteredFoods.filter((food) =>
+              food.title.toLowerCase().includes(search.toLowerCase()),
+            )
+          : [];
     }
 
     setResult(filteredFoods);
-  }, [dessert, category, sort, isFiltered, search]);
+  }, [appetizer, category, sort, isFiltered, search]);
 
   return (
     <div className="minimum-height">
@@ -119,7 +122,7 @@ function DessertLayout() {
           <div>
             <div className="mb-3 flex items-center justify-between lg:mb-5">
               <h2 className="font-bold text-gray-800 lg:text-2xl">
-                لیست دسر‌ها ({result?.length || 0})
+                لیست پیش‌غذاها ({result?.length || 0})
               </h2>
 
               <button
@@ -142,7 +145,7 @@ function DessertLayout() {
               </div>
             ) : (
               <p className="my-6 text-center text-gray-500">
-                هیچ دسر‌ی یافت نشد.
+                هیچ پیش‌غذایی یافت نشد.
               </p>
             )}
           </div>
@@ -151,7 +154,7 @@ function DessertLayout() {
             <div>
               <div className="mb-3 flex items-center justify-between lg:mb-5">
                 <h2 className="font-bold text-gray-800 lg:text-2xl">
-                  دسر‌های ایرانی
+                  پیش‌غذاهای ایرانی
                 </h2>
 
                 <button
@@ -166,71 +169,75 @@ function DessertLayout() {
                 </button>
               </div>
 
-              {dessert.persian_desserts &&
-              dessert.persian_desserts.length > 0 ? (
+              {appetizer &&
+              appetizer.persian_appetizers &&
+              appetizer.persian_appetizers.length > 0 ? (
                 <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-6">
-                  {dessert.persian_desserts.map((item) => (
+                  {appetizer.persian_appetizers.map((item) => (
                     <MenuFoodCard key={item.id} food={item} />
                   ))}
                 </div>
               ) : (
                 <p className="my-6 text-center text-gray-500">
-                  هیچ دسر‌ ایرانی یافت نشد.
+                  هیچ پیش‌غذای ایرانی یافت نشد.
                 </p>
               )}
             </div>
 
             <div>
               <h2 className="mb-3 font-bold text-gray-800 lg:mb-5 lg:text-2xl">
-                دسر‌های غیر ایرانی
+                پیش‌غذاهای غیر ایرانی
               </h2>
 
-              {dessert.foreign_desserts &&
-              dessert.foreign_desserts.length > 0 ? (
+              {appetizer &&
+              appetizer.foreign_appetizers &&
+              appetizer.foreign_appetizers.length > 0 ? (
                 <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-6">
-                  {dessert.foreign_desserts.map((item) => (
+                  {appetizer.foreign_appetizers.map((item) => (
                     <MenuFoodCard key={item.id} food={item} />
                   ))}
                 </div>
               ) : (
                 <p className="my-6 text-center text-gray-500">
-                  هیچ دسر‌ غیر ایرانی یافت نشد.
+                  هیچ پیش‌غذای غیر ایرانی یافت نشد.
                 </p>
               )}
             </div>
 
             <div>
               <h2 className="mb-3 font-bold text-gray-800 lg:mb-5 lg:text-2xl">
-                ژله‌ها
+                سوپ‌ها
               </h2>
 
-              {dessert.jellies && dessert.jellies.length > 0 ? (
+              {appetizer && appetizer.soups && appetizer.soups.length > 0 ? (
                 <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-6">
-                  {dessert.jellies.map((item) => (
+                  {appetizer.soups.map((item) => (
                     <MenuFoodCard key={item.id} food={item} />
                   ))}
                 </div>
               ) : (
                 <p className="my-6 text-center text-gray-500">
-                  هیچ ژله‌ای یافت نشد.
+                  هیچ سوپی یافت نشد.
                 </p>
               )}
             </div>
 
             <div>
               <h2 className="mb-3 font-bold text-gray-800 lg:mb-5 lg:text-2xl">
-                کیک‌ها
+                فینگرفود‌ها
               </h2>
 
-              {dessert.cakes && dessert.cakes.length > 0 ? (
+              {appetizer &&
+              appetizer.finger_foods &&
+              appetizer.finger_foods.length > 0 ? (
                 <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-6">
-                  {dessert.cakes.map((item) => (
+                  {appetizer.finger_foods.map((item) => (
                     <MenuFoodCard key={item.id} food={item} />
                   ))}
                 </div>
               ) : (
                 <p className="my-6 text-center text-gray-500">
-                  هیچ کیکی یافت نشد.
+                  هیچ فینگرفود‌ی یافت نشد.
                 </p>
               )}
             </div>
@@ -240,4 +247,4 @@ function DessertLayout() {
     </div>
   );
 }
-export default DessertLayout;
+export default AppetizerLayout;

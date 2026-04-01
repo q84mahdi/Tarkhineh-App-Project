@@ -6,6 +6,7 @@ import MenuFoodCard from "../MenuFoodCard";
 import { useEffect, useState } from "react";
 import { toEnglishNumbersWithoutComma } from "../../../Utils/formatNumber";
 import toast from "react-hot-toast";
+import type { Food } from "../../../Types/menuTypes";
 
 const FILTERS = [
   {
@@ -46,7 +47,7 @@ const FILTERS = [
 ];
 
 function DrinkLayout() {
-  const [result, setResult] = useState([]);
+  const [result, setResult] = useState<Food[]>([]);
   const [searchParams] = useSearchParams();
   const { drink } = useMenu();
 
@@ -57,7 +58,7 @@ function DrinkLayout() {
   const search = searchParams.get("q");
 
   useEffect(() => {
-    if (!drink && !isFiltered) return;
+    if (!drink || !isFiltered) return;
 
     const allFoods = [
       ...(drink.persian_drinks || []),
@@ -84,27 +85,29 @@ function DrinkLayout() {
       if (sort === "bestseller") {
         filteredFoods = [...filteredFoods].sort(
           (a, b) =>
-            toEnglishNumbersWithoutComma(b.score) -
-            toEnglishNumbersWithoutComma(a.score),
+            Number(toEnglishNumbersWithoutComma(b.score)) -
+            Number(toEnglishNumbersWithoutComma(a.score)),
         );
       } else if (sort === "economical") {
         filteredFoods = [...filteredFoods].sort(
           (a, b) =>
-            toEnglishNumbersWithoutComma(a.price) -
-            toEnglishNumbersWithoutComma(b.price),
+            Number(toEnglishNumbersWithoutComma(a.price)) -
+            Number(toEnglishNumbersWithoutComma(b.price)),
         );
       } else if (sort === "popular") {
-        filteredFoods = [...filteredFoods].sort((a, b) => b.rate - a.rate);
+        filteredFoods = [...filteredFoods].sort(
+          (a, b) => Number(b.rate) - Number(a.rate),
+        );
       }
     }
 
     if (search) {
       filteredFoods =
-        filteredFoods &&
-        filteredFoods.length > 0 &&
-        filteredFoods.filter((food) =>
-          food.title.toLowerCase().includes(search.toLowerCase()),
-        );
+        filteredFoods && filteredFoods.length > 0
+          ? filteredFoods.filter((food) =>
+              food.title.toLowerCase().includes(search.toLowerCase()),
+            )
+          : [];
     }
 
     setResult(filteredFoods);
@@ -166,7 +169,9 @@ function DrinkLayout() {
                 </button>
               </div>
 
-              {drink.persian_drinks && drink.persian_drinks.length > 0 ? (
+              {drink &&
+              drink.persian_drinks &&
+              drink.persian_drinks.length > 0 ? (
                 <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-6">
                   {drink.persian_drinks.map((item) => (
                     <MenuFoodCard key={item.id} food={item} />
@@ -184,7 +189,9 @@ function DrinkLayout() {
                 نوشیدنی‌های غیر ایرانی
               </h2>
 
-              {drink.foreign_drinks && drink.foreign_drinks.length > 0 ? (
+              {drink &&
+              drink.foreign_drinks &&
+              drink.foreign_drinks.length > 0 ? (
                 <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-6">
                   {drink.foreign_drinks.map((item) => (
                     <MenuFoodCard key={item.id} food={item} />
@@ -202,7 +209,7 @@ function DrinkLayout() {
                 نوشیدنی‌های سرد
               </h2>
 
-              {drink.cold_drinks && drink.cold_drinks.length > 0 ? (
+              {drink && drink.cold_drinks && drink.cold_drinks.length > 0 ? (
                 <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-6">
                   {drink.cold_drinks.map((item) => (
                     <MenuFoodCard key={item.id} food={item} />
@@ -220,7 +227,7 @@ function DrinkLayout() {
                 نوشیدنی‌های گرم
               </h2>
 
-              {drink.hot_drinks && drink.hot_drinks.length > 0 ? (
+              {drink && drink.hot_drinks && drink.hot_drinks.length > 0 ? (
                 <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-6">
                   {drink.hot_drinks.map((item) => (
                     <MenuFoodCard key={item.id} food={item} />

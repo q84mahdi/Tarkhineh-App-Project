@@ -6,8 +6,13 @@ import CloseIcon from "../../Icons/CloseIcon";
 import toast from "react-hot-toast";
 import HeartFillIcon from "../../Icons/HeartFillIcon";
 import makeImageKitUrl from "../../Utils/makeImageKitUrl";
+import type { Food } from "../../Types/menuTypes";
 
-function MenuFoodCard({ food }) {
+interface MenuFoodCardProps {
+  food: Food;
+}
+
+function MenuFoodCard({ food }: MenuFoodCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
 

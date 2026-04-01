@@ -6,27 +6,28 @@ import MenuFoodCard from "../MenuFoodCard";
 import { useEffect, useState } from "react";
 import { toEnglishNumbersWithoutComma } from "../../../Utils/formatNumber";
 import toast from "react-hot-toast";
+import type { Food } from "../../../Types/menuTypes";
 
 const FILTERS = [
   {
     key: "category",
-    value: "persian-appetizers",
-    label: "پیش‌غذاهای ایرانی",
+    value: "persian-foods",
+    label: "غذاهای ایرانی",
   },
   {
     key: "category",
-    value: "foreign-appetizers",
-    label: "پیش‌غذاهای غیر ایرانی",
+    value: "forign-foods",
+    label: "غذاهای غیر ایرانی",
   },
   {
     key: "category",
-    value: "soups",
-    label: "سوپ‌ها",
+    value: "pizza",
+    label: "پیتزاها",
   },
   {
     key: "category",
-    value: "finger-foods",
-    label: "فینگرفود‌ها",
+    value: "sandwich",
+    label: "ساندویچ‌ها",
   },
   {
     key: "sort",
@@ -45,10 +46,10 @@ const FILTERS = [
   },
 ];
 
-function AppetizerLayout() {
-  const [result, setResult] = useState([]);
+function MainFoodLayout() {
+  const [result, setResult] = useState<Food[]>([]);
   const [searchParams] = useSearchParams();
-  const { appetizer } = useMenu();
+  const { mainFood } = useMenu();
 
   const isFiltered = searchParams.size > 0;
 
@@ -57,26 +58,26 @@ function AppetizerLayout() {
   const search = searchParams.get("q");
 
   useEffect(() => {
-    if (!appetizer && !isFiltered) return;
+    if (!mainFood || !isFiltered) return;
 
     const allFoods = [
-      ...(appetizer.persian_appetizers || []),
-      ...(appetizer.foreign_appetizers || []),
-      ...(appetizer.soups || []),
-      ...(appetizer.finger_foods || []),
+      ...(mainFood.persian_foods || []),
+      ...(mainFood.foreign_foods || []),
+      ...(mainFood.pizzas || []),
+      ...(mainFood.sandwiches || []),
     ];
 
     let filteredFoods = allFoods;
 
     if (category) {
-      if (category === "persian-appetizers") {
-        filteredFoods = appetizer.persian_appetizers;
-      } else if (category === "foreign-appetizers") {
-        filteredFoods = appetizer.foreign_appetizers;
-      } else if (category === "soups") {
-        filteredFoods = appetizer.soups;
-      } else if (category === "finger-foods") {
-        filteredFoods = appetizer.finger_foods;
+      if (category === "persian-foods") {
+        filteredFoods = mainFood.persian_foods;
+      } else if (category === "forign-foods") {
+        filteredFoods = mainFood.foreign_foods;
+      } else if (category === "pizza") {
+        filteredFoods = mainFood.pizzas;
+      } else if (category === "sandwich") {
+        filteredFoods = mainFood.sandwiches;
       }
     }
 
@@ -84,31 +85,33 @@ function AppetizerLayout() {
       if (sort === "bestseller") {
         filteredFoods = [...filteredFoods].sort(
           (a, b) =>
-            toEnglishNumbersWithoutComma(b.score) -
-            toEnglishNumbersWithoutComma(a.score),
+            Number(toEnglishNumbersWithoutComma(b.score)) -
+            Number(toEnglishNumbersWithoutComma(a.score)),
         );
       } else if (sort === "economical") {
         filteredFoods = [...filteredFoods].sort(
           (a, b) =>
-            toEnglishNumbersWithoutComma(a.price) -
-            toEnglishNumbersWithoutComma(b.price),
+            Number(toEnglishNumbersWithoutComma(a.price)) -
+            Number(toEnglishNumbersWithoutComma(b.price)),
         );
       } else if (sort === "popular") {
-        filteredFoods = [...filteredFoods].sort((a, b) => b.rate - a.rate);
+        filteredFoods = [...filteredFoods].sort(
+          (a, b) => Number(b.rate) - Number(a.rate),
+        );
       }
     }
 
     if (search) {
       filteredFoods =
-        filteredFoods &&
-        filteredFoods.length > 0 &&
-        filteredFoods.filter((food) =>
-          food.title.toLowerCase().includes(search.toLowerCase()),
-        );
+        filteredFoods && filteredFoods.length > 0
+          ? filteredFoods.filter((food) =>
+              food.title.toLowerCase().includes(search.toLowerCase()),
+            )
+          : [];
     }
 
     setResult(filteredFoods);
-  }, [appetizer, category, sort, isFiltered, search]);
+  }, [mainFood, category, sort, isFiltered, search]);
 
   return (
     <div className="minimum-height">
@@ -119,7 +122,7 @@ function AppetizerLayout() {
           <div>
             <div className="mb-3 flex items-center justify-between lg:mb-5">
               <h2 className="font-bold text-gray-800 lg:text-2xl">
-                لیست پیش‌غذاها ({result?.length || 0})
+                لیست غذاها ({result?.length || 0})
               </h2>
 
               <button
@@ -142,7 +145,7 @@ function AppetizerLayout() {
               </div>
             ) : (
               <p className="my-6 text-center text-gray-500">
-                هیچ پیش‌غذایی یافت نشد.
+                هیچ غذایی یافت نشد.
               </p>
             )}
           </div>
@@ -151,7 +154,7 @@ function AppetizerLayout() {
             <div>
               <div className="mb-3 flex items-center justify-between lg:mb-5">
                 <h2 className="font-bold text-gray-800 lg:text-2xl">
-                  پیش‌غذاهای ایرانی
+                  غذاهای ایرانی
                 </h2>
 
                 <button
@@ -166,71 +169,75 @@ function AppetizerLayout() {
                 </button>
               </div>
 
-              {appetizer.persian_appetizers &&
-              appetizer.persian_appetizers.length > 0 ? (
+              {mainFood &&
+              mainFood.persian_foods &&
+              mainFood.persian_foods.length > 0 ? (
                 <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-6">
-                  {appetizer.persian_appetizers.map((item) => (
+                  {mainFood.persian_foods.map((item) => (
                     <MenuFoodCard key={item.id} food={item} />
                   ))}
                 </div>
               ) : (
                 <p className="my-6 text-center text-gray-500">
-                  هیچ پیش‌غذای ایرانی یافت نشد.
+                  هیچ غذای ایرانی یافت نشد.
                 </p>
               )}
             </div>
 
             <div>
               <h2 className="mb-3 font-bold text-gray-800 lg:mb-5 lg:text-2xl">
-                پیش‌غذاهای غیر ایرانی
+                غذاهای غیر ایرانی
               </h2>
 
-              {appetizer.foreign_appetizers &&
-              appetizer.foreign_appetizers.length > 0 ? (
+              {mainFood &&
+              mainFood.foreign_foods &&
+              mainFood.foreign_foods.length > 0 ? (
                 <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-6">
-                  {appetizer.foreign_appetizers.map((item) => (
+                  {mainFood.foreign_foods.map((item) => (
                     <MenuFoodCard key={item.id} food={item} />
                   ))}
                 </div>
               ) : (
                 <p className="my-6 text-center text-gray-500">
-                  هیچ پیش‌غذای غیر ایرانی یافت نشد.
+                  هیچ غذای غیر ایرانی یافت نشد.
                 </p>
               )}
             </div>
 
             <div>
               <h2 className="mb-3 font-bold text-gray-800 lg:mb-5 lg:text-2xl">
-                سوپ‌ها
+                پیتزاها
               </h2>
 
-              {appetizer.soups && appetizer.soups.length > 0 ? (
+              {mainFood && mainFood.pizzas && mainFood.pizzas.length > 0 ? (
                 <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-6">
-                  {appetizer.soups.map((item) => (
+                  {mainFood.pizzas.map((item) => (
                     <MenuFoodCard key={item.id} food={item} />
                   ))}
                 </div>
               ) : (
                 <p className="my-6 text-center text-gray-500">
-                  هیچ سوپی یافت نشد.
+                  هیچ پیتزایی یافت نشد.
                 </p>
               )}
             </div>
 
             <div>
               <h2 className="mb-3 font-bold text-gray-800 lg:mb-5 lg:text-2xl">
-                فینگرفود‌ها
+                ساندویچ‌ها
               </h2>
 
-              {appetizer.finger_foods && appetizer.finger_foods.length > 0 ? (
+              {mainFood &&
+              mainFood.sandwiches &&
+              mainFood.sandwiches.length > 0 ? (
                 <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-6">
-                  {appetizer.finger_foods.map((item) => (
+                  {mainFood.sandwiches.map((item) => (
                     <MenuFoodCard key={item.id} food={item} />
                   ))}
                 </div>
               ) : (
                 <p className="my-6 text-center text-gray-500">
-                  هیچ فینگرفود‌ی یافت نشد.
+                  هیچ ساندویچی یافت نشد.
                 </p>
               )}
             </div>
@@ -240,4 +247,4 @@ function AppetizerLayout() {
     </div>
   );
 }
-export default AppetizerLayout;
+export default MainFoodLayout;

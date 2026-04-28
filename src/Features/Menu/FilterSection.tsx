@@ -10,9 +10,6 @@ import ArrowLeftIcon from "../../Icons/ArrowLeftIcon";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper/modules";
 
-import "swiper/css";
-import "swiper/css/free-mode";
-
 interface FilterSectionProps {
   filters: {
     key: string;

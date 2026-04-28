@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Modal from "../../UI/Modal";
 import CloseIcon from "../../Icons/CloseIcon";
 import GalleryIcon from "../../Icons/GalleryIcon";
-import type { Branch } from "../../Types/branchTypes";
+import type { Branch } from "../../Types/BranchTypes";
 
 interface ContactUsCardProps {
   branch: Branch;

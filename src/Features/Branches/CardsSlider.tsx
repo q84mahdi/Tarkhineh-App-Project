@@ -5,9 +5,6 @@ import MenuIcon from "../../Icons/MenuIcon";
 import { useNavigate } from "react-router-dom";
 import type { Food } from "../../Types/menuTypes";
 
-import "swiper/css";
-import "swiper/css/free-mode";
-
 interface CardsSliderProps {
   title: string;
   cards: Food[];

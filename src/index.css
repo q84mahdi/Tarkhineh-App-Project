@@ -1,5 +1,10 @@
 @import url("/fonts.css");
 
+@import "swiper/css";
+@import "swiper/css/free-mode";
+@import "swiper/css/pagination";
+@import "swiper/css/navigation";
+
 /* Tailwind Configs */
 
 @tailwind base;

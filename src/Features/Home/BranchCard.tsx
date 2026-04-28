@@ -5,7 +5,7 @@ import CloseIcon from "../../Icons/CloseIcon";
 import ArrowLeftIcon from "../../Icons/ArrowLeftIcon";
 import ExpandIcon from "../../Icons/ExpandIcon";
 import GalleryIcon from "../../Icons/GalleryIcon";
-import type { Branch } from "../../Types/branchTypes";
+import type { Branch } from "../../Types/BranchTypes";
 
 interface BranchCardProps {
   branch: Branch;

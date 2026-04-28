@@ -2,11 +2,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination } from "swiper/modules";
 import { toEnglishNumbersWithoutComma } from "../../Utils/formatNumber";
 import Star from "../../UI/Star";
-import type { Comment } from "../../Types/branchTypes";
-
-import "swiper/css";
-import "swiper/css/free-mode";
-import "swiper/css/pagination";
+import type { Comment } from "../../Types/BranchTypes";
 
 interface CommentsSliderProps {
   comments: Comment[];

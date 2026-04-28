@@ -4,10 +4,6 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import ArrowLeftIcon from "../Icons/ArrowLeftIcon";
 import HeaderPagination from "../Icons/HeaderPagination";
 
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-
 interface HeaderProps {
   slides: {
     id: number;

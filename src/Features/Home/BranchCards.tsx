@@ -1,6 +1,6 @@
 import BranchCard from "./BranchCard";
 import useFetch from "../../Hooks/useFetch";
-import type { Branch } from "../../Types/branchTypes";
+import type { Branch } from "../../Types/BranchTypes";
 
 function BranchCards() {
   const { data: ekbatan } = useFetch<Branch>(
